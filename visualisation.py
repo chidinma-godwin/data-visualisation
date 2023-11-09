@@ -82,6 +82,39 @@ def plot_bubble_plot(x, y, col, title, legend_handles):
     plt.show()
 
 
+def plot_line_graph(data):
+    """
+    Makes a line plot of the numeric columns in the given data
+
+    Parameters
+    ----------
+    data : DataFrama
+        The pandas dataframe to plot
+
+    Returns
+    -------
+    None.
+
+    """
+    plt.figure(figsize=(10, 10))
+    
+    # This will plot all the numeric columns in the
+    # dataframe using the index as the x-axis
+    data.plot()
+
+    plt.title("Monthly Visitors To Different Museums")
+    plt.xlabel("Year")
+    plt.ylabel("Number of visitors")
+    plt.xticks(rotation=45)
+    plt.legend()
+
+    plt.savefig("line_plot.png", bbox_inches="tight")
+
+    plt.show()
+
+
+""" Import and visualise data on pdp of countries """
+
 gdp_data = pd.read_csv(
     'https://vincentarelbundock.github.io/Rdatasets/csv/AER/GrowthDJ.csv')
 
@@ -105,3 +138,13 @@ non_oecd_patch = mpatches.Patch(color="red", label="NON OECD Country")
 plot_bubble_plot(gdp_data["gdp60"], gdp_data["gdp85"],
                  gdp_data["oecd"].map(color), "Cross Country GDP",
                  [oecd_patch, non_oecd_patch])
+
+
+""" Import and visualise data on museum visitors """
+
+museum_visitors = pd.read_csv("museum_visitors.csv")
+
+# Set the date column as the index of the data
+museum_visitors.set_index('Date', inplace=True)
+
+plot_line_graph(museum_visitors)

@@ -66,7 +66,7 @@ def plot_bubble_plot(x, y, col, title, legend_handles):
 
     plt.scatter(x, y, c=col, s=200, alpha=0.5)
 
-    plt.title(title)
+    plt.title(title, fontweight="bold")
     plt.xlim(x.min(), x.max())
     plt.xlabel("Per capita GDP in 1960")
     plt.ylabel("Per capita GDP in 1985")
@@ -88,7 +88,7 @@ def plot_line_graph(data):
 
     Parameters
     ----------
-    data : DataFrama
+    data : DataFrame
         The pandas dataframe to plot
 
     Returns
@@ -102,7 +102,7 @@ def plot_line_graph(data):
     # dataframe using the index as the x-axis
     data.plot()
 
-    plt.title("Monthly Visitors To Different Museums")
+    plt.title("Monthly Visitors To Different Museums", fontweight="bold")
     plt.xlabel("Year")
     plt.ylabel("Number of visitors")
     plt.xticks(rotation=45)
@@ -129,6 +129,7 @@ def plot_pie_chart(data):
     """
     plt.figure()
 
+    # Plot the chart as a percentage
     patches, texts, pcts = plt.pie(data, labels=data.index, autopct='%.1f%%',
                                    wedgeprops={'linewidth': 3.0,
                                                'edgecolor': 'white'},
@@ -143,9 +144,39 @@ def plot_pie_chart(data):
 
     plt.title('Museum Monthly Visitors 2017', fontweight="bold")
     plt.tight_layout()
-    
+
     plt.savefig("piechart.png")
+
+    plt.show()
+
+
+def plot_bar_chart(data):
+    """
+    Plot a bar chart of the given data
+
+    Parameters
+    ----------
+    data : DataFrame
+        The data frame to plot
+
+    Returns
+    -------
+    None.
+
+    """
+    plt.figure(figsize=(10, 10))
+
+    data.plot(kind="bar")
     
+    plt.title("Yearly Number of Museum Visitors", fontweight="bold")
+    plt.xlabel("Years")
+    plt.ylabel('Number of Visitors')
+    plt.title("Yearly Number of Museum Visitors", fontweight="bold")
+    plt.legend(framealpha=0.5)
+    plt.xticks(rotation=0)
+
+    plt.savefig("barchart.png")
+
     plt.show()
 
 
@@ -196,3 +227,9 @@ museum_visitors_2017 = museum_visitors.loc["2017-01-01": "2017-12-01"].sum(
 
 # Plot a pie chart of the percange of visitors that visited each museum
 plot_pie_chart(museum_visitors_2017)
+
+# Plot a bar chart of the visitors that visited each museum yearly
+yearly_museum_visitors = museum_visitors.resample('Y').sum()
+yearly_museum_visitors.index = yearly_museum_visitors.index.year
+
+plot_bar_chart(yearly_museum_visitors)

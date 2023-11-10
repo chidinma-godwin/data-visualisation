@@ -276,5 +276,5 @@ plot_bubble_plot(gdp_data["gdp60"], gdp_data["gdp85"],
                  col=gdp_data["oecd"].map(color),
                  title="Cross Country GDP",
                  xlabel="Per capita GDP in 1960",
-                 ylabel="Per capita GDP in 1960",
+                 ylabel="Per capita GDP in 1985",
                  legend_handles=[oecd_patch, non_oecd_patch])

@@ -102,7 +102,7 @@ def plot_line_graph(data):
     # dataframe using the index as the x-axis
     data.plot()
 
-    plt.title("Monthly Visitors To Different Museums", fontweight="bold")
+    plt.title("Monthly Visitors To Different Museums", fontweight="bold" )
     plt.xlabel("Year")
     plt.ylabel("Number of visitors")
     plt.xticks(rotation=45)
@@ -174,6 +174,7 @@ def plot_bar_chart(data):
     plt.title("Yearly Number of Museum Visitors", fontweight="bold")
     plt.legend(framealpha=0.5)
     plt.xticks(rotation=0)
+    plt.tight_layout()
 
     plt.savefig("barchart.png")
 

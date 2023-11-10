@@ -97,7 +97,7 @@ def plot_line_graph(data):
 
     """
     plt.figure(figsize=(10, 10))
-    
+
     # This will plot all the numeric columns in the
     # dataframe using the index as the x-axis
     data.plot()
@@ -110,6 +110,42 @@ def plot_line_graph(data):
 
     plt.savefig("line_plot.png", bbox_inches="tight")
 
+    plt.show()
+
+
+def plot_pie_chart(data):
+    """
+    Plot a pie chart of the given data
+
+    Parameters
+    ----------
+    data : numpy array or pandas Series
+        The sequence to plot
+
+    Returns
+    -------
+    None.
+
+    """
+    plt.figure()
+
+    patches, texts, pcts = plt.pie(data, labels=data.index, autopct='%.1f%%',
+                                   wedgeprops={'linewidth': 3.0,
+                                               'edgecolor': 'white'},
+                                   textprops={'fontweight': 600})
+
+    # Set the colour of the label of each wedge to the wedge colour
+    for i, patch in enumerate(patches):
+        texts[i].set_color(patch.get_facecolor())
+
+    # Set the color of the percent values inside the pie to white
+    plt.setp(pcts, color='white')
+
+    plt.title('Museum Monthly Visitors 2017', fontweight="bold")
+    plt.tight_layout()
+    
+    plt.savefig("piechart.png")
+    
     plt.show()
 
 
@@ -144,7 +180,19 @@ plot_bubble_plot(gdp_data["gdp60"], gdp_data["gdp85"],
 
 museum_visitors = pd.read_csv("museum_visitors.csv")
 
+museum_visitors['Date'] = pd.to_datetime(
+    museum_visitors['Date'], format='%Y-%m-%d')
+
 # Set the date column as the index of the data
 museum_visitors.set_index('Date', inplace=True)
 
+# Draw a line plot of the data
 plot_line_graph(museum_visitors)
+
+
+# Get the sum of visitors in 2017 for each museum
+museum_visitors_2017 = museum_visitors.loc["2017-01-01": "2017-12-01"].sum(
+    axis=0)
+
+# Plot a pie chart of the percange of visitors that visited each museum
+plot_pie_chart(museum_visitors_2017)
